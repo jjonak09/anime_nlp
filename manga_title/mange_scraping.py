@@ -8,7 +8,7 @@ for i in range(1,98):
     sleep(2)
     r = requests.get(url+str(i))
 
-    soup = BeautifulSoup(r.text, 'html5lib')
+    soup = BeautifulSoup(r.text, 'html.parser')
     titles = soup.find_all(class_='book-list--target')
 
     for title in titles:
@@ -17,13 +17,13 @@ for i in range(1,98):
         mange_img_url = title.find('img',class_='book-list--img').get('src')
 
         mange_url = title.find(class_='book-list--item').get('href')
-        sleep(2)
+        sleep(3)
         r2 = requests.get('https://comic.k-manga.jp'+mange_url)
-        soup2 = BeautifulSoup(r2.text,'html5lib')
+        soup2 = BeautifulSoup(r2.text,'html.parser')
         summary = soup2.find(class_='book-info--desc')
         mange_summary = summary.p.text
 
-        mange = mange_title +','+mange_summary+','+mange_tag+','+mange_img_url
+        mange = mange_title +',https://comic.k-manga.jp'+ mange_url +','+mange_summary+','+mange_tag+','+mange_img_url
         print(mange)
         results.append(mange)
 
